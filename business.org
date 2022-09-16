@@ -1,0 +1,43 @@
+#+TITLE: Emacs Table Load
+#+SUBTITLE: Combining tables, processes, for event responses
+Used to keep track of the state of the business, with metadata
+(commits, diffs) used for multiversal exploration (branches, blaming,
+bisect, rerere). BBB,rerere!
+
+Emacs has some solid tools to show basic git metadata in files and
+directories. Can I leverage this in a SES -> Org-column -> Dired
+interface?
+
+* Processes over entities
+Business could be regenerated from a seed/fork and a series of
+commits.
+* Table driven workflows
+** [#A] Taskjuggler
+*** Org-column
+** [#C] Simple Emacs Spreadsheet
+* Event tracking
+** Sauron
+Event log in emacs. How might I conform this to the [[https://github.com/ActivitySchema/ActivitySchema][ActivitySchema]] spec?
+** emacs-twittering-mode
+* Related notes
+*** Change resistance bifurcation
+When simulating a population, overabundance of production leads to
+instability, because of the scarcity following a cycle of many
+consumers of the product.  In regenerative service management,
+ensuring a stable system through feedback rooted in reciprocity would
+be the primary goal.
+*** Resource management, scaled to planets
+Could we design an incentive system that recognizes and rewards energy
+management?
+
+So two solutions with equal time and space complexity would then be
+judged on energy complexity. Not sure whether these are intertwined,
+but the intention is to prioritize energy-efficient solutions over
+heavy compute. An assumption made here is that low power consumption
+allows for diversified hardware solutions to problems. Over the past
+few decades we have made tremendous progress in machine-aided
+solutions, but businesses have seen neither a corresponding increase
+in business satisfaction nor a proliferation of harmonic dynamic
+equilibrium (that is, a dynamic equilibrium that does not involve
+overconsumption of external resources).
+

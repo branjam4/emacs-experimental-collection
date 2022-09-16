@@ -1,0 +1,120 @@
+#+TITLE: Ad-hoc mode
+
+* Convienient generalizable navigation
+** shortdoc + transient + avy + embark
+Can I use these in a way similar to lispy/rigpa to make modes on-the-fly?
+
+** Remap + customize
+Would like to remap keys on the fly, plus change select defaults.
+*** Does it require a derived mode?
+Yes, a minor mode with a keymap derived from the original seems like the way to go here.
+This plus which-key.
+** Other ideas
+*** Parsing
+Tree-sitter, eglot + combobulate, syntax-ppss <- prior art
+*** Random
+*** Repeatable sugar
+#+begin_src elisp
+(defun repeat-command (command)
+  "Repeat COMMAND."
+ (Interactive)
+ (let ((repeat-previous-repeated-command  command)
+       (last-repeatable-command           'repeat))
+   (repeat nil)))
+
+(Defun text-scale-increase-rep (inc)
+  (interactive "p")
+  (repeat-command 'text-scale-increase))
+
+(Defun text-scale-decrease-rep (inc)
+  (interactive "p")
+  (repeat-command 'text-scale-decrease))
+
+(Global-set-key (kbd "M-s-+") 'text-scale-increase-rep)
+(global-set-key (kbd "M-s--") 'text-scale-decrease-rep)
+#+end_src
+
+From https://www.masteringemacs.org/article/repeating-commands-emacs comments:
+#+Begin_src elisp
+    (defun make-repeatable-command (cmd)
+      "Returns a new command that is a repeatable version of CMD. The
+      new command is named CMD-repeat. CMD should be a quoted
+      command. This allows you to bind the command to a compound
+      keystroke and repeat it with just the final key.
+  For example: (global-set-key (kbd \"C-c a\") (make-repeatable-command 'foo))
+      will create a new command called foo-repeat. Typing C-c a will
+      just invoke foo. Typing C-c a a a will invoke foo three times,
+      and so on."
+           (Fset (intern (concat (symbol-name cmd) "-repeat"))
+                 `(lambda ,(help-function-arglist cmd) ;; arg list
+                    ,(format "A repeatable version of `%s'." (symbol-name cmd)) ;; doc string
+                    ,(interactive-form cmd) ;; interactive form
+                    ;; see also repeat-message-function
+                    (setq last-repeatable-command ',cmd) (repeat nil)))
+           (intern (concat (symbol-name cmd) "-repeat")))
+#+end_src
+* Record buffers + lists (composition?) + bookmarks + regexes
+A point to consider for displaying info that users can act mark and act on repeatedly, ad-hoc.
+* Interactive mode creation brainstorm
+** ETL
+*** Exploration phase
+   User does whatever.
+   Somewhere between most and all actions recorded in [[elisp:(view-lossage)]] and edmacro.
+   Can be retrieved as an interactive command chain using elisp:repeat-complex-command.
+ U
+   Ideas to get a user started:
+**** Have user filter files, directories, lists, etc. with [[eval:(regexp-builder)][regexp-builder]]
+*** Transformation phase
+   Automagically identify key functions in a range of edkbd actions.
+**** Dogfood
+Start by naming an "ad-hoc" repo directory (seek guidance from others on whether temp-dir or cache-dir works better).
+**** Init commit
+Skeleton/template generated introduction to the mode and initial instructions.
+Table representing input data for use with this repo.
+**** Commit step
+***** Transform
+Every transformation will include:
++ Name of the command
++ parameters
++ a hook to create diff-based tests and shortdocs.
+***** Diff
+The diff will be:
++ A skeleton/template defined function.
++ Lisp forms, rx transforms used in this step (see francismurillo.github.io/2017-03-30-Exploring-Emacs-rx-Macro).
++ Acceptance criteria in the form of tests with a user y-or-n prompt (if interactive).
+**** Branch step
+In this case, the user has decided on something other than the default option.
+
+The imagined workflow (see https://masteringemacs.org/article/evaluating-lisp-forms-regular-expressions):
+1. search for regex.
+2. Have completing-read/read-from-minibuffer with a prompt for interactive regex completion with a predetermined default.
+3. Use elisp:iedit-mode to highlight all matches of a region and have edits propogate to each simultaneously.
+4. Have a skeleton/template finish the regex lisp form replacement.
+*** Load phase
+**** Main idea: Analyze diffs and git metadata
+Use git blame on the edkbd file for a semi-automated explainable "mode creation report."
+* Process-driven development
+Or catalyst driven development. Idea being that a catalyst brings
+molecules together in fascinating nonlinear ways.
+** Phase-mode
+Customizable workflows for "solidifying" a process. ETL could be seen as a crystallization method:
+  1. Starts with the "atmosphere" (randomly exploring in emacs)
+  2. Percolates and flows through intermediate data structures and transformations (dired, tabulated lists, query-replace-regexp, etc.)
+  3. Solidifies; becomes stable through repeatability/reproducibility.
+* Override notes
++ tmm-prompt :: interesting function which receives a keymap and returns the bindings in a text mode menu.
+  See its documentation for more.
++ Ido :: useful for fuzzy completion. How does its potential compare with vertico quick+buffer/consult?
++ Align-regexp :: align region with regex
++ set-goal-column :: for when next line has an indent.
+* Personal value-add functions
+** Term-help minor mode
+There are some nifty programs that are curses/terminal heavy (i.e. visidata).
+
+We can use these programs in emacs via [[elisp:term][Term]]
+It'd be nice to scrape their help menus/pages for key chords and present that to a user while they use 
+** Replacement
+Also thinking of how to emulate the niche parts of visidata workflow (trivial summary statistics, pivoting, transpose).
+*** Transpose
+https://www.masteringemacs.org/article/fun-vimgolf-4-transpositioning-text-tables covers transposing.
+

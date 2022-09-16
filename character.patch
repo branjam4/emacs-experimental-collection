@@ -1,0 +1,31 @@
+diff --git a/lib/FusqlFS.pm b/lib/FusqlFS.pm
+index ff3320d..890be3b 100644
+--- a/lib/FusqlFS.pm
++++ b/lib/FusqlFS.pm
+@@ -482,10 +482,10 @@ sub clear_cache
+         my $re = "/[^/]+" x $_[1];
+         $key =~ s{$re$}{} if $re;
+         my $lk  = length($key);
+-        while (my $_ = each %cache)
++        while (my $a = each %cache)
+         {
+-            next unless substr($_, 0, $lk) eq $key;
+-            delete $cache{$_};
++            next unless substr($a, 0, $lk) eq $key;
++            delete $cache{$a};
+         }
+     }
+ }
+diff --git a/lib/FusqlFS/Cache/Limited.pm b/lib/FusqlFS/Cache/Limited.pm
+index 0ebe3f7..4dfcc49 100644
+--- a/lib/FusqlFS/Cache/Limited.pm
++++ b/lib/FusqlFS/Cache/Limited.pm
+@@ -191,7 +191,7 @@ sub EXISTS
+ sub FIRSTKEY
+ {
+     my ($self) = @_;
+-    my $_ = keys %{$self->[0]};
++    my $a = keys %{$self->[0]};
+     each %{$self->[0]};
+ }
+ 

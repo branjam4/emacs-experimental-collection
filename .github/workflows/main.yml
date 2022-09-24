@@ -13,22 +13,25 @@ jobs:
   guix-build:
     name: Test Guix installation
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Guix cache
-	uses: actions/cache@v2
-	with:
-	  path: ~/.cache/guix
-	  key: guix-cache-${{ github.sha }}
-	  restore-keys: |
-	    guix-cache-
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/guix
+          key: guix-cache-${{ github.sha }}
+          restore-keys: |
+            guix-cache-
+
       - name: Install Guix
-	uses: PromyLOPh/guix-install-action@v1
+        uses: PromyLOPh/guix-install-action@v1
+
       - name: Ensure no locale warning
-	run: test -z "$(guix --version 2>&1 >/dev/null)"
+        run: test -z "$(guix --version 2>&1 >/dev/null)"
 
       - name: System VM (full VM)
-	run: guix system image --image-type=docker-image --root=emacs-vm.tar.gz vm.scm
+        run: guix system image --image-type=docker-image --root=emacs-vm.tar.gz vm.scm
 
       - name: Pack (Docker)
 	run: guix pack --relocatable --save-provenance --symlink=/opt/gnu/bin=bin --root=qemu-python.tar.gz -m $GITHUB_WORKSPACE/qemu-manifest.scm
@@ -38,11 +41,13 @@ jobs:
 	with:
 	  name: emacs VM
 	  path: emacs-vm.tar.gz
+
       - name: Upload pack (Docker)
 	uses: actions/upload-artifact@v2
 	with:
 	  name: qemu Docker relocatable Binary
 	  path: 'qemu-python.tar.gz'
+
   container-deploy:
     name: Build and push to ghcr
     runs-on: ubuntu-latest

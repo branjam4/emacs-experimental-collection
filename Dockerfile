@@ -1,2 +1,2 @@
 FROM scratch
-ADD emacs-vm.tar.gz /
+ADD /temp/emacs-vm.tar.gz /

@@ -10,6 +10,17 @@
 (use-service-modules spice dbus)
 (use-package-modules base certs emacs python version-control virtualization)
 
+(define %os-release-file
+  (plain-file "os-release"
+              (string-append
+                "NAME=\"GNU Guix\"\n"
+                "PRETTY_NAME=\"GNU Guix\"\n"
+                "VERSION=\""((@ (guix packages) package-version) guix)"\"\n"
+                "ID=guix\n"
+                "HOME_URL=\"https://www.gnu.org/software/guix/\"\n"
+                "SUPPORT_URL=\"https://www.gnu.org/software/guix/help/\"\n"
+                "BUG_REPORT_URL=\"mailto:bug-guix@gnu.org\"\n")))
+
 (operating-system
  (locale "en_US.utf8")
  (locale-libcs (list (canonical-package glibc)))
@@ -23,7 +34,10 @@
       %base-packages))
 
  (services (append
-               (list (dbus-service) (service spice-vdagent-service-type))
+	    (list (dbus-service)
+		  (service special-files-service-type
+			   `(("/etc/os-release" ,%os-release-file)))
+		  (service spice-vdagent-service-type))
                %base-services))
  (bootloader
   (bootloader-configuration

@@ -72,7 +72,8 @@ jobs:
           name: qemu Docker relocatable Binary
           path: temp/
       - name: Display structure of downloaded files
-        run: ls -R
+        id: image
+        run: docker tag $(docker load < /temp/emacs-vm.tar.gz) branjambuild:latest
 
       - name: Install cosign
         if: github.event_name != 'pull_request'

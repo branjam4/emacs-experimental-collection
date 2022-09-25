@@ -1,2 +1,3 @@
-FROM scratch
-ADD /temp/emacs-vm.tar.gz /
+FROM branjambuild:latest
+
+ADD /temp/qemu-emacs.tar.gz /

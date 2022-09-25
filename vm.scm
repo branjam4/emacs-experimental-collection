@@ -8,7 +8,7 @@
  (guix packages)
  (srfi srfi-1))
 (use-service-modules spice dbus)
-(use-package-modules base certs emacs python version-control virtualization)
+(use-package-modules base certs emacs python package-management version-control virtualization)
 
 (define %os-release-file
   (plain-file "os-release"

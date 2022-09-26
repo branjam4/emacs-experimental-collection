@@ -74,11 +74,7 @@ jobs:
 
       - name: Create Docker image
         id: image
-        run: >-
-          echo "::set-output name=IMAGE_ID::'$(docker load < ./temp/emacs-vm.tar.gz)'"
-
-      - name: Tag Docker image
-        run: docker tag ${{ steps.image.outputs.IMAGE_ID }} branjambuild:latest
+        run: docker load < ./temp/emacs-vm.tar.gz
 
       - name: Install cosign
         if: github.event_name != 'pull_request'

@@ -94,6 +94,9 @@ jobs:
         with:
           install: true
 
+      - name: Push Docker image
+        run: docker push guix:latest ${{ env.REGISTRY }}/branjam4/emacsguixsys:latest
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38

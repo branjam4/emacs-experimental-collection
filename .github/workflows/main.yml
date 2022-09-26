@@ -72,12 +72,12 @@ jobs:
           name: qemu Docker relocatable Binary
           path: temp/
 
-      - name: Display structure of downloaded files
+      - name: Create Docker image
         id: image
         run: >-
-          echo "::set-output name=IMAGE_ID::'$(docker load < /temp/emacs-vm.tar.gz)'"
+          echo "::set-output name=IMAGE_ID::'$(docker load < ./temp/emacs-vm.tar.gz)'"
 
-      - name: Display structure of downloaded files
+      - name: Tag Docker image
         run: docker tag ${{ steps.image.outputs.IMAGE_ID }} branjambuild:latest
 
       - name: Install cosign

@@ -75,7 +75,7 @@ jobs:
       - name: Display structure of downloaded files
         id: image
         run: >-
-	  echo "::set-output name=IMAGE_ID::'$(docker load < /temp/emacs-vm.tar.gz)'"
+          echo "::set-output name=IMAGE_ID::'$(docker load < /temp/emacs-vm.tar.gz)'"
 
       - name: Display structure of downloaded files
         run: docker tag ${{ steps.image.outputs.IMAGE_ID }} branjambuild:latest

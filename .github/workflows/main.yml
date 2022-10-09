@@ -25,7 +25,7 @@ jobs:
             guix-cache-
 
       - name: Install Guix
-        uses: PromyLOPh/guix-install-action@v1
+        uses: PromyLOPh/guix-install-action@v1.3
 
       - name: Ensure no locale warning
         run: test -z "$(guix --version 2>&1 >/dev/null)"

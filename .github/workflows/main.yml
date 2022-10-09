@@ -48,6 +48,11 @@ jobs:
           name: qemu Docker relocatable Binary
           path: 'qemu-emacs.tar.gz'
 
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+	  files: *.tar.gz
+
   container-deploy:
     name: Build and push to ghcr
     runs-on: ubuntu-latest

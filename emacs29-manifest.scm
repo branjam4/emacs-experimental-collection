@@ -7,10 +7,13 @@
 (specifications->manifest
   (list "emacs-imenu-list"
         "emacs-anzu"
+	"guix"
+	"bash"
         "emacs-detached"
         "emacs-crdt"
         "emacs-lispy"
 	"emacs-org-ql"
         "emacs-god-mode"
+	"emacs-tshell"
         "emacs-use-package"
         "emacs-next"))
